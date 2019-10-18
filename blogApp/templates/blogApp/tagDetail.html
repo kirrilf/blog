@@ -1,0 +1,14 @@
+{% extends 'blogApp/baseBlogApp.html' %}
+{% block titile %}
+    {{tag.title}} {{block.super}}
+{% endblock titile %}
+
+{% block content %}
+
+    <h1 class="mb-5">Post with "{{tag.title|title}}"tag:</h1>
+    {% for post in tag.posts.all %}
+        {% include 'blogApp/includes/postCardTemplate.html' %}
+    {% endfor %}
+{% endblock content %}
+
+

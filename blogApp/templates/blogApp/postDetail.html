@@ -1,0 +1,17 @@
+{% extends 'blogApp/baseBlogApp.html' %}
+
+{% block title %}
+    {{post.title}} - {{block.super}}
+{% endblock title %}
+
+{% block content %}
+    <h1 class"mt-5">
+        {{post.title}}
+    </h1>
+    <p>
+        {{post.body}}
+    </p>
+{% endblock content %}
+    
+
+

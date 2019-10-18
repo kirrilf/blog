@@ -1,0 +1,15 @@
+{% extends 'blogApp/baseBlogApp.html' %}
+{% block title %}
+    Posts List
+{% endblock title %}
+   
+
+{% block content %}
+    <h1 class="mb-5">Posts:</h1>
+    {% for post in posts %}
+    
+   {% include 'blogApp/includes/postCardTemplate.html' %}
+
+        <p> {{ post.title }} </p>
+    {% endfor %}
+{% endblock content %}
