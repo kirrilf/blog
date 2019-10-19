@@ -22,6 +22,12 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("postDetailUrl", kwargs={"slug": self.slug})
     
+    def getUpdateUrl(self):
+        return reverse('postUpdateUrl', kwargs={"slug": self.slug})
+
+    def getDeleteUrl(self):
+        return reverse('postDeleteUrl', kwargs={"slug": self.slug})
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.slug = genSlug(self.title)
@@ -35,6 +41,11 @@ class Tag(models.Model):
     title = models.CharField(max_length=50)
     slug = models.SlugField(max_length=50, unique=True)
 
+    def getUpdateUrl(self):
+        return reverse('tagUpdateUrl', kwargs={"slug": self.slug})
+        
+    def getDeleteUrl(self):
+        return reverse('tagDeleteUrl', kwargs={"slug": self.slug})
 
     def __str__(self):
         return self.title

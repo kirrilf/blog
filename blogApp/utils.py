@@ -38,3 +38,37 @@ class ObjectCreateMixin:
             newObj = boundForm.save()
             return redirect(newObj)
         return render(request, self.template, context={'form': boundForm})
+
+class ObjectUpdateMixin:
+    formModel = None
+    form = None
+    template = None
+    def get(self, request, slug):
+        obj = self.form.objects.get(slug__iexact=slug)
+        boundForm = self.formModel(instance=obj)
+        return render(request, self.template, context={'form':boundForm, 'obj':obj})
+
+    def post(self, request, slug):
+        obj = self.form.objects.get(slug__iexact=slug)
+        boundForm = self.formModel(request.POST, instance=obj)
+
+        if boundForm.is_valid():
+            updateObj = boundForm.save()
+            return redirect(updateObj)
+
+        return render(request, self.template, context={'form':boundForm, 'obj':obj})
+
+class ObjectDeleteMixin:
+    form = None
+    template = None
+    redirectUrl = None
+
+    def get(self, request, slug):
+        obj = self.form.objects.get(slug__iexact=slug)
+        return render(request, self.template, context={'obj':obj})
+
+    def post(self, request, slug):
+        obj = self.form.objects.get(slug__iexact=slug)
+        obj.delete()
+        return redirect(reverse(self.redirectUrl))
+        

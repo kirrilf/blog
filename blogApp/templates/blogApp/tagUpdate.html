@@ -1,0 +1,36 @@
+{% extends 'blogApp/baseBlogApp.html' %}
+
+{% block title %}
+    Tag Update "{{obj.title|title}}"" - {{bloc.super}}
+{% endblock title %}
+
+{% block content %}
+
+<form action="{{ obj.getUpdateUrl}}" method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+        <div class="form-group">
+            {% if field.errors %}
+                <div clss="alert alert-danger">
+                    {{field.errors}}
+                </div>
+            {% endif %}
+
+            {{field.label}}
+            {{field}}
+        </div>
+    {% endfor %}
+
+
+   
+
+    <button type="submit" class = "btn btn-primary">
+        Tag Update
+    </buttom>
+</form>
+
+
+
+
+{% endblock content %}
