@@ -1,21 +1,37 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
+from django.views.generic import View
 from django.http import HttpResponse
 
 from .models import Post, Tag
+from .utils import ObjectDetailMixin, ObjectListMixin, ObjectCreateMixin
+from .forms import TagForm, PostForm
 
-def postsList(request):
-    posts = Post.objects.all()
-    return render(request, 'blogApp/index.html', context={'posts':posts})
+
+class PostsList(ObjectListMixin, View):
+    model = Post
+    template = 'blogApp/index.html'
+
+class TagsList(ObjectListMixin, View):
+    model = Tag
+    template = 'blogApp/tagsList.html'
+
+
+class PostDetail(ObjectDetailMixin, View):
+    model = Post
+    template = 'blogApp/postDetail.html'
  
-def postDetail(request, slug):
-    post = Post.objects.get(slug__iexact=slug)
-    return render(request, 'blogApp/postDetail.html', context={'post':post})
-      
-def tagsList(request):
-    tags = Tag.objects.all()
-    return render(request, 'blogApp/tagsList.html', context={'tags': tags})
+        
+class TagDetail(ObjectDetailMixin, View):
+    model = Tag
+    template = 'blogApp/tagDetail.html'
 
-def tagDetail(request, slug):
-    tag = Tag.objects.get(slug__iexact=slug)
-    return render(request, 'blogApp/tagDetail.html', context={'tag':tag})
+class TagCreate(ObjectCreateMixin, View):
+    formModel  = TagForm
+    template = 'blogApp/tagCreate.html'
+
+class PostCreate(ObjectCreateMixin, View):
+    formModel  = PostForm
+    template = 'blogApp/postCreate.html'
+
+
