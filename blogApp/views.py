@@ -9,10 +9,14 @@ from .models import Post, Tag
 from .utils import ObjectDetailMixin, ObjectListMixin, ObjectCreateMixin, ObjectUpdateMixin, ObjectDeleteMixin
 from .forms import TagForm, PostForm
 
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 class PostsList(ObjectListMixin, View):
     model = Post
     template = 'blogApp/index.html'
+
 
 class TagsList(ObjectListMixin, View):
     model = Tag
@@ -28,32 +32,43 @@ class TagDetail(ObjectDetailMixin, View):
     model = Tag
     template = 'blogApp/tagDetail.html'
 
-class TagCreate(ObjectCreateMixin, View):
+
+class TagCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     formModel  = TagForm
     template = 'blogApp/tagCreate.html'
+    raise_exception = True
 
-class PostCreate(ObjectCreateMixin, View):
+
+class PostCreate(LoginRequiredMixin, ObjectCreateMixin, View):
     formModel  = PostForm
     template = 'blogApp/postCreate.html'
+    raise_exception = True
 
-class TagUpdate(ObjectUpdateMixin, View):
+
+class TagUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     formModel  = TagForm
     form = Tag
     template = 'blogApp/tagUpdate.html'
+    raise_exception = True
 
-class PostUpdate(ObjectUpdateMixin, View):
+
+class PostUpdate(LoginRequiredMixin, ObjectUpdateMixin, View):
     formModel = PostForm
     form = Post
     template = 'blogApp/postUpdate.html'
+    raise_exception = True
 
 
-class TagDelete(ObjectDeleteMixin, View):
+class TagDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     form = Tag
     template = 'blogApp/tagDelete.html'
     redirectUrl = 'tagsListUrl'
+    raise_exception = True
 
-class PostDelete(ObjectDeleteMixin, View):
+
+class PostDelete(LoginRequiredMixin, ObjectDeleteMixin, View):
     form = Post
     template = 'blogApp/postDelete.html'
     redirectUrl = 'postListUrl'
+    raise_exception = True
    

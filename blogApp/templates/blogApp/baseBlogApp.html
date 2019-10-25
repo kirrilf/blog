@@ -1,1 +1,22 @@
 {% extends 'base.html' %}
+
+{% block adminPanel %}
+
+    
+    
+    <div class="btn-group">
+        <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Create
+        </button>
+        <div class="dropdown-menu">
+            <a class="dropdown-item" href="{% url 'postCreateUrl' %}">Post</a>
+            <a class="dropdown-item" href="{% url 'tagCreateUrl' %}">Tag</a>
+        </div>
+    </div>
+    {% if detail %}
+        <a href="{{adminObject.getUpdateUrl}}" class="btn btn-light">Edit</a>
+        <a href="{{adminObject.getDeleteUrl}}" class="btn btn-danger">Delete</a>
+        
+    {% endif %}
+
+{% endblock adminPanel %}
